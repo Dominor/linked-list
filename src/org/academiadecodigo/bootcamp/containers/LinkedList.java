@@ -1,8 +1,8 @@
 package org.academiadecodigo.bootcamp.containers;
 
-public class LinkedList {
+public class LinkedList<E> {
 
-    private Node head;
+    private Node<E> head;
     private int length = 0;
 
     public LinkedList() {
@@ -17,10 +17,10 @@ public class LinkedList {
      * Adds an element to the end of the list
      * @param data the element to add
      */
-    public void add(Object data)  {
+    public void add(E data)  {
 
-        Node node = new Node(data);
-        Node iterator = head;
+        Node<E> node = new Node<E>(data);
+        Node<E> iterator = head;
 
         while (iterator.getNext() != null){
             iterator = iterator.getNext();
@@ -35,9 +35,9 @@ public class LinkedList {
      * @param index the index of the element
      * @return the element
      */
-    public Object get(int index) {
+    public E get(int index) {
 
-        Node iterator = head;
+        Node<E> iterator = head;
         int i = 0;
 
         while (iterator.getNext() != null) {
@@ -55,7 +55,7 @@ public class LinkedList {
      * @param data element to search for
      * @return the index of the element, or -1 if the list does not contain element
      */
-    public int indexOf(Object data) {
+    public int indexOf(E data) {
 
         Node iterator = head;
         int i = 0;
@@ -76,9 +76,9 @@ public class LinkedList {
      * @param data the element to remove
      * @return true if element was removed
      */
-    public boolean remove(Object data) {
+    public boolean remove(E data) {
 
-        Node iterator = head;
+        Node<E> iterator = head;
 
         while (iterator.getNext() != null) {
             if (iterator.getNext().getData() == data) {
@@ -91,29 +91,29 @@ public class LinkedList {
         return false;
     }
 
-    private class Node {
+    private class Node<E> {
 
-        private Object data;
-        private Node next;
+        private E data;
+        private Node<E> next;
 
-        public Node(Object data) {
+        public Node(E data) {
             this.data = data;
             next = null;
         }
 
-        public Object getData() {
+        public E getData() {
             return data;
         }
 
-        public void setData(Object data) {
+        public void setData(E data) {
             this.data = data;
         }
 
-        public Node getNext() {
+        public Node<E> getNext() {
             return next;
         }
 
-        public void setNext(Node next) {
+        public void setNext(Node<E> next) {
             this.next = next;
         }
     }

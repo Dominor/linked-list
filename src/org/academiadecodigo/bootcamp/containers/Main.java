@@ -6,8 +6,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-        LinkedList list = new LinkedList();
-        Object data1 = new Integer(1);
+        LinkedList<Integer> list = new LinkedList();
+        Integer data1 = new Integer(1);
 
         list.add(data1);
         System.out.println(list.indexOf(data1));
