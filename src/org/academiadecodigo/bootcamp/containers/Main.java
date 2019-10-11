@@ -1,7 +1,5 @@
 package org.academiadecodigo.bootcamp.containers;
 
-import org.w3c.dom.ls.LSOutput;
-
 public class Main {
 
     public static void main(String[] args) {

@@ -1,8 +1,10 @@
 package org.academiadecodigo.bootcamp.containers;
 
-public class LinkedList<E> {
+import java.util.Iterator;
 
-    private Node<E> head;
+public class LinkedList<E> implements Iterable<E> {
+
+    private Node head;
     private int length = 0;
 
     public LinkedList() {
@@ -15,36 +17,38 @@ public class LinkedList<E> {
 
     /**
      * Adds an element to the end of the list
+     *
      * @param data the element to add
      */
-    public void add(E data)  {
+    public void add(E data) {
 
-        Node<E> node = new Node<E>(data);
-        Node<E> iterator = head;
+        Node node = new Node(data);
+        ListIterator iterator = iterator();
 
-        while (iterator.getNext() != null){
-            iterator = iterator.getNext();
+        while (iterator.hasNext()) {
+            iterator.next();
         }
-        iterator.setNext(node);
+        iterator.getCurrent().setNext(node);
         length++;
 
     }
 
     /**
      * Obtains an element by index
+     *
      * @param index the index of the element
      * @return the element
      */
     public E get(int index) {
 
-        Node<E> iterator = head;
         int i = 0;
+        ListIterator iterator = iterator();
 
-        while (iterator.getNext() != null) {
+        while (iterator.hasNext()) {
             if (i == index) {
-                return iterator.getNext().getData();
+                return iterator.next();
             }
-            iterator = iterator.getNext();
+            iterator.next();
             i++;
         }
         return null;
@@ -52,19 +56,19 @@ public class LinkedList<E> {
 
     /**
      * Returns the index of the element in the list
+     *
      * @param data element to search for
      * @return the index of the element, or -1 if the list does not contain element
      */
     public int indexOf(E data) {
 
-        Node iterator = head;
+        ListIterator iterator = iterator();
         int i = 0;
 
-        while (iterator.getNext() != null) {
-            if (iterator.getNext().getData() == data) {
+        while (iterator.hasNext()) {
+            if (iterator.next() == data) {
                 return i;
             }
-            iterator = iterator.getNext();
             i++;
         }
         // Arrived at the end of the list, so the element wasn't found inside it
@@ -73,48 +77,87 @@ public class LinkedList<E> {
 
     /**
      * Removes an element from the list
+     *
      * @param data the element to remove
      * @return true if element was removed
      */
     public boolean remove(E data) {
 
-        Node<E> iterator = head;
+        ListIterator iterator = iterator();
 
-        while (iterator.getNext() != null) {
-            if (iterator.getNext().getData() == data) {
-                iterator.setNext(iterator.getNext().getNext());
+        while (iterator.hasNext()) {
+            if (iterator.next() == data) {
+                iterator.remove();
                 length--;
                 return true;
             }
-            iterator = iterator.getNext();
         }
         return false;
     }
 
-    private class Node<E> {
+    @Override
+    public ListIterator iterator() {
+        return new ListIterator(head);
+    }
+
+
+    private class Node {
 
         private E data;
-        private Node<E> next;
+        private Node next;
 
-        public Node(E data) {
+        Node(E data) {
             this.data = data;
             next = null;
         }
 
-        public E getData() {
+        E getData() {
             return data;
         }
 
-        public void setData(E data) {
+        void setData(E data) {
             this.data = data;
         }
 
-        public Node<E> getNext() {
+        Node getNext() {
             return next;
         }
 
-        public void setNext(Node<E> next) {
+        void setNext(Node next) {
             this.next = next;
+        }
+
+    }
+
+    private class ListIterator implements Iterator<E> {
+
+        private Node current;
+
+        ListIterator(Node node) {
+            this.current = node;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return current.getNext() != null;
+        }
+
+        @Override
+        public E next() {
+            current = current.getNext();
+            return current.getData();
+        }
+
+        /**
+         * TODO Fix NullPointerException
+         */
+        public void remove() {
+            System.out.println(current.getData());
+            current.setNext(current.getNext().getNext());
+        }
+
+        Node getCurrent() {
+            return current;
         }
     }
 
