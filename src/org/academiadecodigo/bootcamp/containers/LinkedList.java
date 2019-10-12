@@ -28,7 +28,7 @@ public class LinkedList<E> implements Iterable<E> {
         while (iterator.hasNext()) {
             iterator.next();
         }
-        iterator.getCurrent().setNext(node);
+        iterator.add(node);
         length++;
 
     }
@@ -86,7 +86,7 @@ public class LinkedList<E> implements Iterable<E> {
         ListIterator iterator = iterator();
 
         while (iterator.hasNext()) {
-            if (iterator.next() == data) {
+            if (iterator.getCurrentElement() == data) {
                 iterator.remove();
                 length--;
                 return true;
@@ -137,6 +137,10 @@ public class LinkedList<E> implements Iterable<E> {
             this.current = node;
         }
 
+        void add (Node node) {
+            current.setNext(node);
+        }
+
         @Override
         public boolean hasNext() {
             return current.getNext() != null;
@@ -152,12 +156,18 @@ public class LinkedList<E> implements Iterable<E> {
          * TODO Fix NullPointerException
          */
         public void remove() {
-            System.out.println(current.getData());
-            current.setNext(current.getNext().getNext());
+            Node next = current.getNext();
+            System.out.println(current.getNext());
+
+            current.setNext(next.getNext());
         }
 
-        Node getCurrent() {
+        Node getCurrentNode() {
             return current;
+        }
+
+        E getCurrentElement() {
+            return current.getData();
         }
     }
 
