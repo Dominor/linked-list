@@ -91,6 +91,7 @@ public class LinkedList<E> implements Iterable<E> {
                 length--;
                 return true;
             }
+            iterator.next();
         }
         return false;
     }
@@ -143,7 +144,7 @@ public class LinkedList<E> implements Iterable<E> {
 
         @Override
         public boolean hasNext() {
-            return current.getNext() != null;
+            return (current.getNext() != null);
         }
 
         @Override
@@ -153,7 +154,7 @@ public class LinkedList<E> implements Iterable<E> {
         }
 
         /**
-         * TODO Fix NullPointerException
+         *
          */
         public void remove() {
             Node next = current.getNext();
